@@ -427,16 +427,21 @@ def upload(request):
     fname = escape(f.name)
     logger.debug("creating document {}".format(fname))
 
-    doc = Document.create_document(
-        user=user,
-        title=fname,
-        size=size,
-        lang=lang,
-        file_name=fname,
-        parent_id=parent_id,
-        notes=notes,
-        page_count=page_count
-    )
+    try:
+        doc = Document.objects.create_document(
+            user=user,
+            title=fname,
+            lang=lang,
+            size=size,
+            file_name=fname,
+            parent_id=parent_id,
+            notes=notes,
+            page_count=page_count
+        )
+    except ValidationError as e:
+        status = 400
+        return ','.join(e.messages), status
+
     logger.debug(
         "uploading to {}".format(doc.path.url())
     )
