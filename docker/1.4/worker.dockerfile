@@ -24,6 +24,7 @@ RUN apt-get update \
                     tesseract-ocr-rus \
                     tesseract-ocr-ron \
                     tesseract-ocr-spa \
+                    tesseract-ocr-ara \
  && rm -rf /var/lib/apt/lists/* \
  && pip3 install --upgrade pip
 
